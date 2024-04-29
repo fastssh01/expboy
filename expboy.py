@@ -101,14 +101,14 @@ def dorks():
         for result in search_results:
             counter += 1
             print(result)
-            time.sleep(0.1)
+            time.sleep(0.1)  # Add a delay between requests
             requ += 1
             if requ >= int(amount):
                 break
 
             data = (counter, result)
             logger(data)
-            time.sleep(0.1)
+            time.sleep(0.1)  # Add a delay between logging data
 
     except KeyboardInterrupt:
         print ("\n")
@@ -129,4 +129,4 @@ def dorks():
 # Main
 if __name__ == "__main__":
     dorks()
-        
+    
