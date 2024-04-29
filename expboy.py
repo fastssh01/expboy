@@ -95,17 +95,18 @@ def dorks():
         requ = 0
         counter = 0
 
-        for results in search(dork + ' ' + ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=10)), tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
-            counter += 1
-            print(results)
-            time.sleep(0.1)
-            requ += 1
-            if requ >= int(amount):
-                break
+        for page in range(1, int(amount) // 10 + 2):
+            results = search(dork, tld="com", lang="en", num=10, start=(page - 1) * 10, stop=None, pause=5)
+            for result in results:
+                counter += 1
+                print(result)
+                time.sleep(0.1)
+                requ += 1
+                if requ >= int(amount):
+                    break
 
-            data = (counter, results)
-            logger(data)
-            time.sleep(0.1)
+                logger((counter, result))
+                time.sleep(0.1)
 
     except KeyboardInterrupt:
         print ("\n")
@@ -123,4 +124,3 @@ def dorks():
 # Main
 if __name__ == "__main__":
     dorks()
-    
