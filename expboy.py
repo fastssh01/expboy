@@ -1,7 +1,6 @@
 from __future__ import print_function
 try:
     from googlesearch import search
-    from googlesearch import exceptions as gsexceptions
 except ImportError:
     print("")
 
@@ -90,14 +89,12 @@ def dorks():
     try:
         dork = input("\n[+] Enter The Dork Search Query: ")
         amount = input("[+] Enter The Number Of Websites To Display: ")
-        proxy = input("[+] Enter Proxy (optional): ")
-
         print ("\n ")
 
         requ = 0
         counter = 0
 
-        search_results = list(search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5, proxies={'http': proxy}))
+        search_results = list(search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5))
 
         random.shuffle(search_results)  # Shuffle the search results list
 
