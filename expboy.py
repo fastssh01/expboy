@@ -98,14 +98,14 @@ def dorks():
         for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
             counter += 1
             print(results)
-            time.sleep(0.1)
+            time.sleep(5)  # Add a delay of 5 seconds between each search request
             requ += 1
             if requ >= int(amount):
                 break
 
             data = (counter, results)
             logger(data)
-            time.sleep(0.1)
+            time.sleep(5)  # Add a delay of 5 seconds after each logging operation
 
     except KeyboardInterrupt:
         print ("\n")
