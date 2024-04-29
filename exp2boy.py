@@ -111,4 +111,9 @@ def dorks():
     except KeyboardInterrupt:
         print ("\n")
         print ("\033[1;91m[!] User Interruption Detected..!\033[0")
-        time.sleep(0
+        time.sleep(0)
+
+    print ("[•] Done... Exiting...")
+    print ("\n\t\t\t\t\033[34mDorks Eye\033[0m")
+    print ("\t\t\033[1;91
+    
