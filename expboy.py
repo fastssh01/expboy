@@ -8,7 +8,6 @@ except ImportError:
 import sys
 import time
 import random
-import requests
 
 # Dorks Eye v1.0
 
@@ -91,26 +90,26 @@ def dorks():
     try:
         dork = input("\n[+] Enter The Dork Search Query: ")
         amount = input("[+] Enter The Number Of Websites To Display: ")
-        proxy = input("[+] Enter Proxy (Optional, Format: 'http://username:password@ip:port'): ").strip()
+        proxy = input("[+] Enter Proxy (optional): ")
+
         print ("\n ")
 
         requ = 0
         counter = 0
 
-        if proxy:
-            proxies = {"http": proxy, "https": proxy}
-        else:
-            proxies = None
+        search_results = list(search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5, proxies={'http': proxy}))
 
-        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5, proxies=proxies):
+        random.shuffle(search_results)  # Shuffle the search results list
+
+        for result in search_results:
             counter += 1
-            print(results)
+            print(result)
             time.sleep(0.1)
             requ += 1
             if requ >= int(amount):
                 break
 
-            data = (counter, results)
+            data = (counter, result)
             logger(data)
             time.sleep(0.1)
 
@@ -121,11 +120,16 @@ def dorks():
         print ("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
         time.sleep(0.5)
         sys.exit(1)
+
     except Exception as e:
-        print("\nAn error occurred:", e)
-        print("\nPlease check your input and try again.")
+        print(f"\n[!] An error occurred: {e}")
 
     print ("[•] Done... Exiting...")
     print ("\n\t\t\t\t\033[34mDorks Eye\033[0m")
-    print ("\t\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n
-    
+    print ("\t\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
+    sys.exit()
+
+# Main
+if __name__ == "__main__":
+    dorks()
+        
