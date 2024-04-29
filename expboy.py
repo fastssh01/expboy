@@ -1,6 +1,7 @@
 from __future__ import print_function
 try:
     from googlesearch import search
+    from googlesearch import exceptions as gsexceptions
 except ImportError:
     print("")
 
@@ -94,21 +95,17 @@ def dorks():
         requ = 0
         counter = 0
 
-        search_results = list(search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5))
-
-        random.shuffle(search_results)  # Shuffle the search results list
-
-        for result in search_results:
+        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
             counter += 1
-            print(result)
-            time.sleep(0.1)  # Add a delay between requests
+            print(results)
+            time.sleep(0.1)
             requ += 1
             if requ >= int(amount):
                 break
 
-            data = (counter, result)
+            data = (counter, results)
             logger(data)
-            time.sleep(0.1)  # Add a delay between logging data
+            time.sleep(0.1)
 
     except KeyboardInterrupt:
         print ("\n")
@@ -117,9 +114,6 @@ def dorks():
         print ("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
         time.sleep(0.5)
         sys.exit(1)
-
-    except Exception as e:
-        print(f"\n[!] An error occurred: {e}")
 
     print ("[•] Done... Exiting...")
     print ("\n\t\t\t\t\033[34mDorks Eye\033[0m")
