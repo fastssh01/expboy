@@ -1,14 +1,12 @@
 from __future__ import print_function
 try:
     from googlesearch import search
-    from googlesearch import exceptions as gsexceptions
 except ImportError:
     print("")
 
 import sys
 import time
 import random
-import string
 
 # Dorks Eye v1.0
 
@@ -96,7 +94,8 @@ def dorks():
         requ = 0
         counter = 0
 
-        for results in search(dork + " " + ''.join(random.choice(string.ascii_lowercase) for i in range(5)), tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
+        random_seed = random.randint(0, 100000)  # Generate a random seed
+        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5, user_agent=f'DorksEye/{random_seed}'):
             counter += 1
             print(results)
             time.sleep(0.1)
@@ -111,9 +110,17 @@ def dorks():
     except KeyboardInterrupt:
         print ("\n")
         print ("\033[1;91m[!] User Interruption Detected..!\033[0")
-        time.sleep(0)
+        time.sleep(0.5)
+        print ("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
+        time.sleep(0.5)
+        sys.exit(1)
 
     print ("[•] Done... Exiting...")
     print ("\n\t\t\t\t\033[34mDorks Eye\033[0m")
-    print ("\t\t\033[1;91
+    print ("\t\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
+    sys.exit()
+
+# Main
+if __name__ == "__main__":
+    dorks()
     
