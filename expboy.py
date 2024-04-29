@@ -64,6 +64,11 @@ try:
     data = input("\n[+] Do You Like To Save The Output In A File? (Y/N) ").strip()
     l0g = ("")
 
+    use_proxy = input("[+] Do You Want To Use Proxy? (Y/N) ").strip()
+    proxy = None
+    if use_proxy.lower().startswith("y"):
+        proxy = input("[+] Enter Proxy (format: http://host:port): ").strip()
+
 except KeyboardInterrupt:
         print ("\n")
         print ("\033[1;91m[!] User Interruption Detected..!\033[0")
@@ -96,7 +101,7 @@ def dorks():
         counter = 0
 
         for page in range(1, int(amount) // 10 + 2):
-            results = search(dork, tld="com", lang="en", num=10, start=(page - 1) * 10, stop=None, pause=5)
+            results = search(dork, tld="com", lang="en", num=10, start=(page - 1) * 10, stop=None, pause=5, proxy=proxy)
             for result in results:
                 counter += 1
                 print(result)
@@ -124,3 +129,4 @@ def dorks():
 # Main
 if __name__ == "__main__":
     dorks()
+    
