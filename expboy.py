@@ -114,7 +114,9 @@ def dorks():
         print ("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
         time.sleep(0.5)
         sys.exit(1)
-
+    except Exception as e:
+        print("An error occurred:", e)
+    
     print ("[•] Done... Exiting...")
     print ("\n\t\t\t\t\033[34mDorks Eye\033[0m")
     print ("\t\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
