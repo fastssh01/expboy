@@ -8,6 +8,7 @@ except ImportError:
 import sys
 import time
 import random
+import requests
 
 # Dorks Eye v1.0
 
@@ -86,42 +87,55 @@ else:
     print ("[!] Saving is Skipped...")
     print ("\n" + "  " + "»" * 78 + "\n")
 
+def perform_search_with_retry(dork, amount):
+    # Retry logic
+    max_retries = 5
+    retries = 0
+
+    while retries < max_retries:
+        try:
+            for result in search(dork, tld="com", lang="en", start=random.randint(0, 50), stop=None, pause=5):
+                print(result)
+                time.sleep(0.1)
+                # Logging logic
+                logger((counter, result))
+                time.sleep(0.1)
+                requ += 1
+                if requ >= int(amount):
+                    break
+            break  # Break the retry loop if search completes successfully
+        except gsexceptions.HTTPError as e:
+            if e.response.status_code == 429:  # Too Many Requests
+                print("Too many requests. Retrying after 60 seconds...")
+                time.sleep(60)  # Wait for 60 seconds before retrying
+                retries += 1
+            else:
+                raise  # Re-raise the exception if it's not HTTP 429
+        except Exception as e:
+            print("An error occurred:", e)
+            break  # Exit the retry loop if any other exception occurs
+
 def dorks():
     try:
         dork = input("\n[+] Enter The Dork Search Query: ")
         amount = input("[+] Enter The Number Of Websites To Display: ")
-        print ("\n ")
+        print("\n ")
 
         requ = 0
         counter = 0
 
-        for results in search(dork, tld="com", lang="en", start=random.randint(0, 50), stop=None, pause=5):
-            counter += 1
-            print(results)
-            time.sleep(0.1)
-            requ += 1
-            if requ >= int(amount):
-                break
-
-            data = (counter, results)
-            logger(data)
-            time.sleep(0.1)
+        perform_search_with_retry(dork, amount)
 
     except KeyboardInterrupt:
-        print ("\n")
-        print ("\033[1;91m[!] User Interruption Detected..!\033[0")
+        print("\n")
+        print("\033[1;91m[!] User Interruption Detected..!\033[0")
         time.sleep(0.5)
-        print ("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
+        print("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
         time.sleep(0.5)
         sys.exit(1)
-    except Exception as e:
-        print("An error occurred:", e)
-    
-    print ("[•] Done... Exiting...")
-    print ("\n\t\t\t\t\033[34mDorks Eye\033[0m")
-    print ("\t\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
-    sys.exit()
 
 # Main
 if __name__ == "__main__":
     dorks()
+``
+        
