@@ -95,7 +95,7 @@ def dorks():
         requ = 0
         counter = 0
 
-        for results in search(dork, tld="com", lang="en", start=random.randint(0, 300), stop=None, pause=5):
+        for results in search(dork, tld="com", lang="en", start=random.randint(0, 50), stop=None, pause=5):
             counter += 1
             print(results)
             time.sleep(0.1)
