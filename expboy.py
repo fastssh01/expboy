@@ -10,18 +10,14 @@ import time
 import random
 import requests
 
-def make_request(url, proxy=None):
-    if proxy:
-        proxies = {
-            'http': proxy,
-            'https': proxy
-        }
-        response = requests.get(url, proxies=proxies)
+def make_request(url, proxies=None):  # Modified to accept a proxies argument
+    if proxies:
+        response = requests.get(url, proxies=proxies)  # Pass proxies to requests.get if provided
     else:
         response = requests.get(url)
     
     return response
-
+    
 # Dorks Eye v1.0
 
 if sys.version[0] in "2":
@@ -119,16 +115,15 @@ def dorks(proxy=None):  # Modified to accept a proxy argument
         requ = 0
         counter = 0
 
-        for url in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
+        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5, proxies=proxies):
             counter += 1
-            response = make_request(url, proxies=proxies)
-            print(response.text)  # Just printing the response text as an example
+            print(results)
             time.sleep(0.1)
             requ += 1
             if requ >= int(amount):
                 break
 
-            data = (counter, url)
+            data = (counter, results)
             logger(data)
             time.sleep(0.1)
 
