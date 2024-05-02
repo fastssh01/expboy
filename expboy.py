@@ -1,5 +1,6 @@
 from __future__ import print_function
 try:
+    import requests
     from googlesearch import search
     from googlesearch import exceptions as gsexceptions
 except ImportError:
@@ -8,6 +9,24 @@ except ImportError:
 import sys
 import time
 import random
+
+# Function to make requests through a proxy
+def make_request(url, proxy):
+    try:
+        response = requests.get(url, proxies={"http": proxy, "https": proxy})
+        return response.text
+    except Exception as e:
+        print("Error:", e)
+        return None
+
+# Function to get proxy details
+def get_proxy_details():
+    use_proxy = input("[+] Do you want to use a proxy? (Y/N): ").strip().lower()
+    if use_proxy.startswith("y"):
+        proxy = input("[+] Enter the proxy (e.g., http://username:password@proxy_ip:port): ").strip()
+        return proxy
+    else:
+        return None
 
 # Dorks Eye v1.0
 
@@ -95,6 +114,8 @@ def dorks():
         requ = 0
         counter = 0
 
+        proxy = get_proxy_details() # Asking user if they want to use a proxy and getting proxy details if yes
+
         for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
             counter += 1
             print(results)
@@ -112,14 +133,4 @@ def dorks():
         print ("\033[1;91m[!] User Interruption Detected..!\033[0")
         time.sleep(0.5)
         print ("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
-        time.sleep(0.5)
-        sys.exit(1)
-
-    print ("[•] Done... Exiting...")
-    print ("\n\t\t\t\t\033[34mDorks Eye\033[0m")
-    print ("\t\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
-    sys.exit()
-
-# Main
-if __name__ == "__main__":
-    dorks()
+        time.sleep(0
