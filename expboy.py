@@ -114,7 +114,7 @@ def dorks():
         requ = 0
         counter = 0
 
-        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5 proxies=proxies):
+        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5, proxies=proxies):
             counter += 1
             print(results)
             time.sleep(0.1)
