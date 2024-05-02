@@ -8,7 +8,20 @@ except ImportError:
 import sys
 import time
 import random
+import requests
 
+def make_request(url, proxy=None):
+    if proxy:
+        proxies = {
+            'http': proxy,
+            'https': proxy
+        }
+        response = requests.get(url, proxies=proxies)
+    else:
+        response = requests.get(url)
+    
+    return response
+    
 # Dorks Eye v1.0
 
 if sys.version[0] in "2":
@@ -87,6 +100,12 @@ else:
     print ("\n" + "  " + "»" * 78 + "\n")
 
 def dorks():
+    use_proxy = input("\n[+] Do you want to use a proxy? (Y/N): ").strip().lower()
+    if use_proxy.startswith('y'):
+        proxy = input("[+] Enter the proxy (e.g., http://username:password@proxy_ip:proxy_port): ").strip()
+    else:
+        proxy = None
+        
     try:
         dork = input("\n[+] Enter The Dork Search Query: ")
         amount = input("[+] Enter The Number Of Websites To Display: ")
