@@ -10,9 +10,13 @@ import time
 import random
 import requests
 
-def make_request(url, proxies=None):  # Modified to accept a proxies argument
-    if proxies:
-        response = requests.get(url, proxies=proxies)  # Pass proxies to requests.get if provided
+def make_request(url, proxy=None):
+    if proxy:
+        proxies = {
+            'http': proxy,
+            'https': proxy
+        }
+        response = requests.get(url, proxies=proxies)
     else:
         response = requests.get(url)
     
@@ -95,10 +99,10 @@ else:
     print ("[!] Saving is Skipped...")
     print ("\n" + "  " + "»" * 78 + "\n")
 
-def dorks(proxy=None):  # Modified to accept a proxy argument
+def dorks(proxy=None):
     use_proxy = input("\n[+] Do you want to use a proxy? (Y/N): ").strip().lower()
     if use_proxy.startswith('y'):
-        if not proxy:  # If proxy is not provided, ask for it
+        if not proxy:
             proxy = input("[+] Enter the proxy (e.g., http://username:password@proxy_ip:proxy_port): ").strip()
         proxies = {
             'http': proxy,
@@ -115,7 +119,7 @@ def dorks(proxy=None):  # Modified to accept a proxy argument
         requ = 0
         counter = 0
 
-        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5, proxies=proxies):
+        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
             counter += 1
             print(results)
             time.sleep(0.1)
@@ -142,4 +146,5 @@ def dorks(proxy=None):  # Modified to accept a proxy argument
 
 # Main
 if __name__ == "__main__":
-    dorks()  # Modify this line if you want to pass a proxy argument to the dorks function
+    dorks()
+    
