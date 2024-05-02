@@ -99,12 +99,17 @@ else:
     print ("[!] Saving is Skipped...")
     print ("\n" + "  " + "»" * 78 + "\n")
 
-def dorks():
+def dorks(proxy=None):  # Modified to accept a proxy argument
     use_proxy = input("\n[+] Do you want to use a proxy? (Y/N): ").strip().lower()
     if use_proxy.startswith('y'):
-        proxy = input("[+] Enter the proxy (e.g., http://username:password@proxy_ip:proxy_port): ").strip()
+        if not proxy:  # If proxy is not provided, ask for it
+            proxy = input("[+] Enter the proxy (e.g., http://username:password@proxy_ip:proxy_port): ").strip()
+        proxies = {
+            'http': proxy,
+            'https': proxy
+        }
     else:
-        proxy = None
+        proxies = None
         
     try:
         dork = input("\n[+] Enter The Dork Search Query: ")
@@ -141,4 +146,4 @@ def dorks():
 
 # Main
 if __name__ == "__main__":
-    dorks()
+    dorks()  # Modify this line if you want to pass a proxy argument to the dorks function
