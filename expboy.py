@@ -21,7 +21,7 @@ def make_request(url, proxy=None):
         response = requests.get(url)
     
     return response
-    
+
 # Dorks Eye v1.0
 
 if sys.version[0] in "2":
@@ -119,15 +119,16 @@ def dorks(proxy=None):  # Modified to accept a proxy argument
         requ = 0
         counter = 0
 
-        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
+        for url in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
             counter += 1
-            print(results)
+            response = make_request(url, proxies=proxies)
+            print(response.text)  # Just printing the response text as an example
             time.sleep(0.1)
             requ += 1
             if requ >= int(amount):
                 break
 
-            data = (counter, results)
+            data = (counter, url)
             logger(data)
             time.sleep(0.1)
 
