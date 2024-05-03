@@ -21,7 +21,17 @@ def make_request(url, proxy=None):
         response = requests.get(url)
     
     return response
-    
+
+def test_proxy(proxy):
+    try:
+        response = requests.get("https://www.example.com", proxies={'http': proxy, 'https': proxy}, timeout=10)
+        if response.status_code == 200:
+            print("Proxy is working properly.")
+        else:
+            print("Proxy returned status code:", response.status_code)
+    except Exception as e:
+        print("Error occurred while testing proxy:", e)
+
 # Dorks Eye v1.0
 
 if sys.version[0] in "2":
@@ -104,6 +114,7 @@ def dorks(proxy=None):
     if use_proxy.startswith('y'):
         if not proxy:
             proxy = input("[+] Enter the proxy (e.g., http://username:password@proxy_ip:proxy_port): ").strip()
+            test_proxy(proxy)
         proxies = {
             'http': proxy,
             'https': proxy
@@ -147,4 +158,3 @@ def dorks(proxy=None):
 # Main
 if __name__ == "__main__":
     dorks()
-    
