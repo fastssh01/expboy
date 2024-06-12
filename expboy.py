@@ -7,8 +7,8 @@ except ImportError:
 
 import sys
 import time
-import random
 import requests
+import random
 
 def make_request(url, proxy=None):
     if proxy:
@@ -83,63 +83,34 @@ for col in z:
     sys.stdout.flush()
     time.sleep(0.4)
 
-try:
-    data = input("\n[+] Do You Like To Save The Output In A File? (Y/N) ").strip()
-    l0g = ("")
+def logger(data, log_filename):
+    with open(log_filename + ".txt", "a") as file:
+        file.write(str(data) + "\n")
 
-except KeyboardInterrupt:
-        print ("\n")
-        print ("\033[1;91m[!] User Interruption Detected..!\033[0")
-        time.sleep(0.5)
-        print ("\n\n\t\033[1;91m[!] I like to See Ya, Hacking \033[0m😃\n\n")
-        time.sleep(0.5)
-        sys.exit(1)
-
-def logger(data):
-    file = open((l0g) + ".txt", "a")
-    file.write(str(data))
-    file.write("\n")
-    file.close()
-
-if data.lower().startswith("y"):
-    l0g = input("[~] Give The File a Name: ")
-    print ("\n" + "  " + "»" * 78 + "\n")
-    logger(data)
-else:
-    print ("[!] Saving is Skipped...")
-    print ("\n" + "  " + "»" * 78 + "\n")
-
-def dorks(proxy=None):
-    use_proxy = input("\n[+] Do you want to use a proxy? (Y/N): ").strip().lower()
-    if use_proxy.startswith('y'):
-        if not proxy:
-            proxy = input("[+] Enter the proxy (e.g., http://username:password@proxy_ip:proxy_port): ").strip()
-            test_proxy(proxy)
-        proxies = {
-            'http': proxy,
-            'https': proxy
-        }
-    else:
-        proxies = None
+def dorks(proxy, dork, log_filename):
+    test_proxy(proxy)
+    proxies = {
+        'http': proxy,
+        'https': proxy
+    }
+    
+    amount = random.randint(5, 20)  # Generate a random number between 5 and 20
         
     try:
-        dork = input("\n[+] Enter The Dork Search Query: ")
-        amount = input("[+] Enter The Number Of Websites To Display: ")
-        print ("\n ")
-
+        print("\n ")
         requ = 0
         counter = 0
 
-        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
+        for results in search(dork, tld="com", lang="en", num=amount, start=0, stop=None, pause=5):
             counter += 1
             print(results)
             time.sleep(0.1)
             requ += 1
-            if requ >= int(amount):
+            if requ >= amount:
                 break
 
             data = (counter, results)
-            logger(data)
+            logger(data, log_filename)
             time.sleep(0.1)
 
     except KeyboardInterrupt:
@@ -157,4 +128,8 @@ def dorks(proxy=None):
 
 # Main
 if __name__ == "__main__":
-    dorks()
+    proxy = "http://cavacyke-rotate:p464jtmegae6@p.webshare.io:80"  # Add your proxy here
+    dork = "example dork search query"  # Add your dork query here
+    log_filename = "output_log"  # Log file name
+    dorks(proxy, dork, log_filename)
+            
