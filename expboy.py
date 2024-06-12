@@ -8,7 +8,6 @@ except ImportError:
 import sys
 import time
 import requests
-import random
 
 def make_request(url, proxy=None):
     if proxy:
@@ -87,26 +86,24 @@ def logger(data, log_filename):
     with open(log_filename + ".txt", "a") as file:
         file.write(str(data) + "\n")
 
-def dorks(proxy, dork, log_filename):
+def dorks(proxy, dork, amount, log_filename):
     test_proxy(proxy)
     proxies = {
         'http': proxy,
         'https': proxy
     }
-    
-    amount = random.randint(5, 20)  # Generate a random number between 5 and 20
         
     try:
         print("\n ")
         requ = 0
         counter = 0
 
-        for results in search(dork, tld="com", lang="en", num=amount, start=0, stop=None, pause=5):
+        for results in search(dork, tld="com", lang="en", num=int(amount), start=0, stop=None, pause=5):
             counter += 1
             print(results)
             time.sleep(0.1)
             requ += 1
-            if requ >= amount:
+            if requ >= int(amount):
                 break
 
             data = (counter, results)
@@ -130,6 +127,7 @@ def dorks(proxy, dork, log_filename):
 if __name__ == "__main__":
     proxy = "http://cavacyke-rotate:p464jtmegae6@p.webshare.io:80"  # Add your proxy here
     dork = "example dork search query"  # Add your dork query here
+    amount = 10  # Number of websites to display
     log_filename = "output_log"  # Log file name
-    dorks(proxy, dork, log_filename)
-            
+    dorks(proxy, dork, amount, log_filename)
+    
